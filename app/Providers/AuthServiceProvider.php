@@ -13,8 +13,18 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
+    
+    // Para uma melhor organização, é costumeiro que criemos políticas para um grupo de regras. Existem dois comandos para se criar uma política.
+    
+    // 1. php artisan make:policy NomeDaPolicy
+
+    // O segundo comando para se criar uma policy recebe, além do nome da policy, o nome da model a qual queremos assegurar esta policy
+    // 2. php artisan make:policy NomeDaPolicy --model=NomeDaModel
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        // O exemplo abaixo é de como nós registramos a policy que acabamos de criar
+        // 'App\Model' => 'App\Policies\ModelPolicy',
+
+        'App\Chamado' => 'App\Policies\ChamadoPolicy',
     ];
 
     /**
@@ -32,8 +42,11 @@ class AuthServiceProvider extends ServiceProvider
         // Em outras palavras, temos uma chamada que segue o exemplo:
 
         // Gate::define('nome-da-regra', function($user, Model $nomeDaModel) {});
-        Gate::define('ver-chamado', function($user, Chamado $chamado) {
-            return $user->id == $chamado->user_id;
-        });
+        
+        // Gate::define('ver-chamado', function($user, Chamado $chamado) {
+        //     return $user->id == $chamado->user_id;
+        // });
+
+        // Como criamos uma policy para as regras de chamado, não se faz necessário fazer a regra no método boot
     }
 }
