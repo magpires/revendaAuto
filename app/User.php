@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Chamado;
+use App\Papel;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,10 @@ class User extends Authenticatable
     // PS: Este método é bem conceitual e será melhorado nas próximas aulas.
     public function eAdmin() {
       return $this->id == 1;
+    }
+
+    // Aqui nós retornamos todos os papeis de um usuário
+    public function papeis() {
+      return $this->belongsToMany(Papel::class);
     }
 }
