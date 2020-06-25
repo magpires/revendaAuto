@@ -18,13 +18,18 @@ class AuthServiceProvider extends ServiceProvider
     
     // 1. php artisan make:policy NomeDaPolicy
 
-    // O segundo comando para se criar uma policy recebe, além do nome da policy, o nome da model a qual queremos assegurar esta policy
+    // O segundo comando para se criar uma policy recebe, além do nome da policy, o nome da model a qual queremos assegurar esta policy.
+    // Isso nos garante que ele crie uma policy configurada com os principais métodos já inclusos e com os devidos uses das classes que vamos trabalhar
     // 2. php artisan make:policy NomeDaPolicy --model=NomeDaModel
+
     protected $policies = [
         // O exemplo abaixo é de como nós registramos a policy que acabamos de criar
         // 'App\Model' => 'App\Policies\ModelPolicy',
 
-        'App\Chamado' => 'App\Policies\ChamadoPolicy',
+        // 'App\Chamado' => 'App\Policies\ChamadoPolicy',
+        
+        // Registrando a classe criada com o segundo comando do php artisan
+        'App\Chamado' => 'App\Policies\ChamadoTestePolicy',
     ];
 
     /**

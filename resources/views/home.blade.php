@@ -23,10 +23,22 @@
         @endforelse --}}
 
         {{-- As possibilidades são muitas. Neste exemplo prático abaixo, estamos exibindo todos os chamados, mas apenas os chamados do usuário logado terão o link 'Editar' a mostra --}}
-        @forelse ($chamados as $chamado)
+        {{-- @forelse ($chamados as $chamado)
             
             <p>{{$chamado->titulo}}
                 @can('ver-chamado', $chamado)
+                    <a href="/home/{{$chamado->id}}">Editar</a>
+                @endcan
+            </p>
+        @empty
+            <p>Não existem chamados</p>
+        @endforelse --}}
+
+        {{-- Com a criação da model de policy mais elaborada, com os métodos e uses já inclusos, podemos usar as regras da seguinte forma --}}
+        @forelse ($chamados as $chamado)
+            
+            <p>{{$chamado->titulo}}
+                @can('view', $chamado)
                     <a href="/home/{{$chamado->id}}">Editar</a>
                 @endcan
             </p>
