@@ -35,11 +35,21 @@
         @endforelse --}}
 
         {{-- Com a criação da model de policy mais elaborada, com os métodos e uses já inclusos, podemos usar as regras da seguinte forma --}}
+        
+        {{-- Este can('nome-da-regra', App\NomeDaModel::class) serve para validar quem pode criar um chamado. --}}
+        {{-- Reparem que temos que passar a model a qual pertence esta regra, pois o Laravel não consegue saber buscar a classe correta --}}
+        @can('create', App\Chamado::class)
+            <p>Criar Chamado</p>
+        @endcan
+        
         @forelse ($chamados as $chamado)
             
             <p>{{$chamado->titulo}}
-                @can('view', $chamado)
+                @can('update', $chamado)
                     <a href="/home/{{$chamado->id}}">Editar</a>
+                @endcan
+                @can('delete', $chamado)
+                    <a href="/home/{{$chamado->id}}">Deletar</a>
                 @endcan
             </p>
         @empty
