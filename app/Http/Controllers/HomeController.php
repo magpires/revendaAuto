@@ -27,7 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $chamados = Chamado::where('user_id', $user->id)->get();
+        // $chamados = Chamado::where('user_id', $user->id)->get() = Usado para trazer os registros pertencentes ao usuário logado
+
+        $chamados = Chamado::all();
 
         return view('home', compact('chamados'));
     }
@@ -56,13 +58,14 @@ class HomeController extends Controller
         // }
 
         // O exemplo abaixo é o oposto do método denies(). Aqui, ele retorna true, caso o usuário tenha acesso o usuário tenha acesso a uma determinada regra.
-        if(Gate::allows('ver-chamado', $chamado)) {
-            return view('detalhe', compact('chamado'));
-        }
+        // if(Gate::allows('ver-chamado', $chamado)) {
+        //     return view('detalhe', compact('chamado'));
+        // }
 
-        abort(403, "Não autorizado");
+        // abort(403, "Não autorizado");
 
-        // return view('detalhe', compact('chamado'));
+        // Caso a validação para ver um chamado seja feita na view, nós apenas chamamos esta view e deixemos que ela cuide do resto.
+        return view('detalhe', compact('chamado'));
 
         // PS: Você não é obrigado a retornar uma mensagem de "Não autorizado" quando um usuário tenta acessar algo restrito a ele. Você é livre pra retornar uma view ou rota no método denies(), fazendo com que, por exemplo, o usuário retorne a home.
         // Tudo vai depender da situação. A mesma observação vale para o inverso, onde validamos com allows
