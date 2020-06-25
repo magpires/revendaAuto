@@ -196,3 +196,4 @@ Route::get('/empresa',function(){
 });
 
 Route::get('/home', 'HomeController@index');
+Route::get('/home/{id}', 'HomeController@detalhe');
