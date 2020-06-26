@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        // Registe suas classes de seeds aqui, caso queira semear utilizando o comando php artisan db:seed
+        // $this->call(NomeDaClasseSeeder::class);
+        $this->call(PapelSeeder::class);
+        $this->call(PermissaoSeeder::class);
     }
 }
