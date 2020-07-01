@@ -25,7 +25,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
+    // Aqui nós vamos mudar a rota que o usuário é redirecionado ao logar-se no sistema. Em vez de ser /home, será /admin
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.

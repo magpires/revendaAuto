@@ -195,5 +195,20 @@ Route::get('/empresa',function(){
   return view('site.empresa',compact('galeria'));
 });
 
-Route::get('/home', 'HomeController@index');
-Route::get('/home/{id}', 'HomeController@detalhe');
+// A crianção de grupos protegidos nas rotas serve para eliminarmos a necessidade de criar o método construtor nos controller para exigir a autenticação do usuário para acessar os métodos do controller.
+
+// Cria se um grupo com da seguinte forma:
+// Route::group(['middleware' => 'auth', 'prefix' => 'nomeprefix'], function() {});
+
+// Exemplo prático
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
+  // Todas as rotas dentro deste grupo estarão protegidas com autenticação e irão erdar o prefixo /admin
+  // Exemplo www.suaapliacao.com.br/admin/rota1
+
+  Route::get('/', 'Admin\AdminController@index');
+  // Observe que na rota anterior, definimos a URL simplesmente com "/", pois como ela está no grupo "/admin", a mesma irá herdar a rota base "/admin"
+
+
+});
+
+// Route::get('/home/{id}', 'HomeController@detalhe');

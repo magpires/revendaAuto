@@ -25,7 +25,9 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
+    // Assim como nos controllers de login e register, também iremos alterar a rota de redirecionamento após a redefinição da senha
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.

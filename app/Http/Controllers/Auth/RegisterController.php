@@ -27,7 +27,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
+    // Assim como no controller de login, também iremos alterar a rota de redirecionamento após o cadastro no sistema
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
