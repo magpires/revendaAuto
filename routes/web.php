@@ -208,6 +208,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
   Route::get('/', 'Admin\AdminController@index');
   // Observe que na rota anterior, definimos a URL simplesmente com "/", pois como ela está no grupo "/admin", a mesma irá herdar a rota base "/admin"
 
+  // Vamos gerar um controller automático, que vem com alguns métodos e rotas já definidos.
+  // Para criar este controller, basta executar o seguinte comando no terminal:
+  // php artisan make:controller NomeDoController --resource
+
+  // Para chamar as rotas do controller resource criado, basta colocar o seguinte comando no arquivo de rotas:
+  // Route::resource('nomedoelementodocontroller', 'NomeDoController');
+
+  // Exemplo prático
+  Route::resource('usuarios', 'Admin\UsuarioController');
+
+  // Caso seja criado algum método extra nesse controller, sua rota deve ser configurada
 
 });
 
