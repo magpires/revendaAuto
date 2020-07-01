@@ -218,7 +218,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
   // Exemplo prático
   Route::resource('usuarios', 'Admin\UsuarioController');
 
-  // Caso seja criado algum método extra nesse controller, sua rota deve ser configurada
+  // Caso seja criado algum método extra nesse controller, sua rota deve ser declarada neste arquivo web.php.
+  // Não há segredo quanto a declaração de rotas para novos métodos que vem de controllers resources, basta seguir os exemplos abaixo:
+  // Para rotas do tipo get: Route::get('suaurl/', ['as' => 'apelido.da.rota', 'uses' => 'NomeDoController@metodoEscolhido']);
+  // Para rotas do tipo post: Route::post('suaurl/', ['as' => 'apelido.da.rota', 'uses' => 'NomeDoController@metodoEscolhido']);
+
+  // Como criamos três novos métodos em UsuarioController, vamos criar as rotas para eles
+  Route::get('usuarios/papel/{id}', ['as' => 'usuarios.papel', 'uses' => 'Admin\UsuarioController@papel']);
+  Route::post('usuarios/papel/{papel}', ['as' => 'usuarios.papel.store', 'uses' => 'Admin\UsuarioController@papelStore']);
+  Route::delete('usuarios/papel/{usuario}/{papel}', ['as' => 'usuarios.papel.destroy', 'uses' => 'Admin\UsuarioController@papelDestroy']);
 
 });
 
