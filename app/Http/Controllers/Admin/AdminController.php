@@ -17,6 +17,11 @@ class AdminController extends Controller
     // A segunda forma é através da criação de grupos nas rotas.
     
     public function index() {
-        return view('admin.index');
+        // Definindo um array de caminhos
+        $caminhos = [
+            ['url' => '', 'titulo' => 'Painel']
+        ];
+        
+        return view('admin.index', compact('caminhos'));
     }
 }
