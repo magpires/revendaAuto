@@ -38,7 +38,7 @@
                                 <form action="{{route('usuarios.papel.destroy', [$usuario->id, $papel->id])}}" method="post">
                                     {{-- o helper method_field('name') abaixo irá trocar o method do nosso formulário de "post" para delete, assim como configuramos em nossa rota. --}}
                                     {{ method_field('DELETE') }}
-                                    @csrf
+                                    {{ csrf_field() }}
                                     <button title="Deletar" class="btn red"><i class="material-icons">delete</i></button>
                                 </form>
                             </td>

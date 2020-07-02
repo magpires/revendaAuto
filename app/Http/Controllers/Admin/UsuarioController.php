@@ -47,11 +47,34 @@ class UsuarioController extends Controller
     }
 
     public function papelStore(Request $request, $id) {
-        
+        // Primeiramente, vamos recuperar o usuário escolhido
+        $usuario = User::findOrFail($id);
+
+        // Recuperando dados do formulário
+        $dados = $request->all();
+
+        // Atribuindo papel a um usuário
+        // Encontramos o papel, de acordo com o id capturado no formulário
+        $papel = Papel::findOrFail($dados['papel_id']);
+
+        // Atribuimos o papel a este usuário
+        $usuario->adicionaPapel($papel);
+
+        return redirect()->back();
     }
 
     public function papelDestroy($id, $papel_id) {
-        
+        // Primeiramente, vamos recuperar o usuário escolhido
+        $usuario = User::findOrFail($id);
+
+        // Atribuindo papel a um usuário
+        // Encontramos o papel, de acordo com o id passado para o método
+        $papel = Papel::findOrFail($papel_id);
+
+        // removemos o papel a este usuário
+        $usuario->removePapel($papel);
+
+        return redirect()->back();
     }
 
     /**
