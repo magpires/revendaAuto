@@ -228,6 +228,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
   Route::post('usuarios/papel/{papel}', ['as' => 'usuarios.papel.store', 'uses' => 'Admin\UsuarioController@papelStore']);
   Route::delete('usuarios/papel/{usuario}/{papel}', ['as' => 'usuarios.papel.destroy', 'uses' => 'Admin\UsuarioController@papelDestroy']);
 
+  // Resource de PapelController
+  Route::resource('papeis', 'Admin\PapelController');
+
 });
 
 // Route::get('/home/{id}', 'HomeController@detalhe');

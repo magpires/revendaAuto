@@ -86,5 +86,6 @@ class User extends Authenticatable
     }
 
     return $this->papeis()->detach($papel);
-  }// Fim do método para remover papel do usuário
+  }
+  // Fim do método para remover papel do usuário
 }
