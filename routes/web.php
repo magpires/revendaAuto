@@ -231,6 +231,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
   // Resource de PapelController
   Route::resource('papeis', 'Admin\PapelController');
 
+  // Como criamos três novos métodos em PapelController, vamos criar as rotas para eles
+  Route::get('papeis/permissao/{id}', ['as' => 'papeis.permissao', 'uses' => 'Admin\PapelController@permissao']);
+  Route::post('papeis/permissao/{permissao}', ['as' => 'papeis.permissao.store', 'uses' => 'Admin\PapelController@permissaoStore']);
+  Route::delete('papeis/permissao/{papel}/{permissao}', ['as' => 'papeis.permissao.destroy', 'uses' => 'Admin\PapelController@permissaoDestroy']);
+
 });
 
 // Route::get('/home/{id}', 'HomeController@detalhe');

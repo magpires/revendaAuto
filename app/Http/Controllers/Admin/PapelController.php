@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Papel;
+use App\Permissao;
 
 class PapelController extends Controller
 {
@@ -32,6 +33,55 @@ class PapelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Os 3 métodos abaixo estão relacionado com a atribuição de papeis a usuários
+    public function permissao($id) {
+        // Primeiramente, vamos recuperar o papel escolhido
+        $papel = Papel::findOrFail($id);
+
+        // Pegamos a lista de permissões
+        $permissoes = Permissao::all();
+
+         // Vamos implementar os caminhos aqui também
+         $caminhos = [
+            ['url' => '/admin', 'titulo' => 'Admin'],
+            ['url' => route('papeis.index'), 'titulo' => 'Papéis'],
+            ['url' => '', 'titulo' => 'Permissões']
+        ];
+
+        return view('admin.papel.permissao', compact('papel', 'permissoes', 'caminhos'));
+    }
+
+    public function permissaoStore(Request $request, $id) {
+        // Primeiramente, vamos recuperar o papel escolhido
+        $papel = Papel::findOrFail($id);
+
+        // Recuperando dados do formulário
+        $dados = $request->all();
+
+        // Atribuindo permissão a um papel
+        // Encontramos a permissão, de acordo com o id capturado no formulário
+        $permissao = Permissao::findOrFail($dados['permissao_id']);
+
+        // Atribuimos a permissao ao papel
+        $papel->adicionaPermissao($permissao);
+
+        return redirect()->back();
+    }
+
+    public function permissaoDestroy($id, $permissoes_id) {
+        // Primeiramente, vamos recuperar o papel escolhido
+        $papel = Papel::findOrFail($id);
+
+        // Encontramos a permissão, de acordo com o id passado para o método
+        $permissao = Permissao::findOrFail($permissoes_id);
+
+        // removemos a permissão deste
+        $papel->removePermissao($permissao);
+
+        return redirect()->back();
+    }
+
     public function create()
     {
         // Montando os caminhos
