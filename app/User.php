@@ -41,7 +41,10 @@ class User extends Authenticatable
   // Aqui neste método, assume-se que o administrador tem id igual a 1. Logo, verificamos se o id do usuário logado é igual a 1 e caso positivo, retornamos true, fazendo assim com que o método before($user, $ability) interrompa as verificações de permissões da classe ChamadoPolicy.
   // PS: Este método é bem conceitual e será melhorado nas próximas aulas.
   public function eAdmin() {
-    return $this->id == 1;
+    // return $this->id == 1;
+
+    // Vamos verificar se o usuário tem o papel de admin, para liberarmos total acesso ao sistema para ele
+    return $this->existePapel('Admin');
   }
 
   // Aqui nós retornamos todos os papeis de um usuário
@@ -88,4 +91,15 @@ class User extends Authenticatable
     return $this->papeis()->detach($papel);
   }
   // Fim do método para remover papel do usuário
+
+  // Método temUmPapelDestes
+  public function temUmPapelDestes($papeis) {
+    // Recuperando os papéis do usuário
+    $userPapeis = $this->papeis;
+
+    // Agora vamos avaliar se o usuário tem um dos papeis que o método recebe
+    // Será usado um método próprio do Laravel para isso, o método interset($lista). Caso haja um ou mais papeis entre as duas listas, ele retornará true.
+    // Nós também podemos contar quantos papeis existem em comum acionando o método count()
+    return $papeis->interset($userPapeis)->count();
+  }
 }

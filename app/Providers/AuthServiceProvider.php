@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Chamado;
+use App\Permissao;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -53,5 +54,20 @@ class AuthServiceProvider extends ServiceProvider
         // });
 
         // Como criamos uma policy para as regras de chamado, não se faz necessário fazer a regra no método boot
+
+        // Recuperando todas as permissões e seus papeis no banco através do método listaPermissoes()
+        foreach ($this->listaPermissoes() as $permissao) {
+            // Registando as permissões do banco com o método gate
+            Gate::define($permissao->nome, function($user) use($permissao) {
+                // O método temUmPapelDestes($papeis) irá verificar se o usuário tem um dos papeis ao qual passamos a permissão
+                // Caso o usuário seja um adm, iremos liberar total acesso a ele. Pra isso, temos a segunda condicional após o ||
+                return  $user->temUmPapelDestes($permissao->papeis) || $user->eAdmin();
+            });
+        }
+    }
+
+    // Criando um método que retorna todas as permissões com seus papeis existentes no banco de dados
+    public function listaPermissoes() {
+        return Permissao::with('papeis')->get();
     }
 }
