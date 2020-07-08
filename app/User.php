@@ -57,7 +57,7 @@ class User extends Authenticatable
     // Verificamos se o papel não é uma string, em casos em que o papel não é passado como um objeto
     if(is_string($papel)) {
         // Caso seja string, procuramos pelo papel tal como o seu nome informado
-        $papel = Papel::where('nome', $papel)->find();
+        $papel = Papel::where('nome', $papel)->firstOrFail();
     }
 
     // Depois vamos verificar se o papel já não existe para o usuário
@@ -98,8 +98,8 @@ class User extends Authenticatable
     $userPapeis = $this->papeis;
 
     // Agora vamos avaliar se o usuário tem um dos papeis que o método recebe
-    // Será usado um método próprio do Laravel para isso, o método interset($lista). Caso haja um ou mais papeis entre as duas listas, ele retornará true.
+    // Será usado um método próprio do Laravel para isso, o método intersect($lista). Caso haja um ou mais papeis entre as duas listas, ele retornará true.
     // Nós também podemos contar quantos papeis existem em comum acionando o método count()
-    return $papeis->interset($userPapeis)->count();
+    return $papeis->intersect($userPapeis)->count();
   }
 }

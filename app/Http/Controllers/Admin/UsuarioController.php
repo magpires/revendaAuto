@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Papel;
 
+// Para acionarmos nossas regras de ACL nos controllers, é importante importar a classe Gate;
+use Illuminate\Support\Facades\Gate;
+
 class UsuarioController extends Controller
 {
     /**
@@ -16,6 +19,11 @@ class UsuarioController extends Controller
      */
     public function index()
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-view')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Recuperando todos os usuários no banco
         $usuarios = User::all();
 
@@ -30,6 +38,11 @@ class UsuarioController extends Controller
 
     // Os 3 métodos abaixo estão relacionado com a atribuição de papeis a usuários
     public function papel($id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o usuário escolhido
         $usuario = User::findOrFail($id);
 
@@ -47,6 +60,11 @@ class UsuarioController extends Controller
     }
 
     public function papelStore(Request $request, $id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o usuário escolhido
         $usuario = User::findOrFail($id);
 
@@ -64,6 +82,11 @@ class UsuarioController extends Controller
     }
 
     public function papelDestroy($id, $papel_id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o usuário escolhido
         $usuario = User::findOrFail($id);
 
@@ -84,7 +107,10 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-create')) {
+            abort(403, 'Não autorizado');
+        }
     }
 
     /**
@@ -95,7 +121,10 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-create')) {
+            abort(403, 'Não autorizado');
+        }
     }
 
     /**
@@ -117,7 +146,10 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-edit')) {
+            abort(403, 'Não autorizado');
+        }
     }
 
     /**
@@ -129,7 +161,10 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-edit')) {
+            abort(403, 'Não autorizado');
+        }
     }
 
     /**
@@ -140,6 +175,9 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('usuario-delete')) {
+            abort(403, 'Não autorizado');
+        }
     }
 }

@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Papel;
 use App\Permissao;
 
+// Para acionarmos nossas regras de ACL nos controllers, é importante importar a classe Gate;
+use Illuminate\Support\Facades\Gate;
+
 class PapelController extends Controller
 {
     /**
@@ -16,6 +19,11 @@ class PapelController extends Controller
      */
     public function index()
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-view')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Recuperando todos os papéis
         $registros = Papel::all();
         
@@ -36,6 +44,11 @@ class PapelController extends Controller
 
     // Os 3 métodos abaixo estão relacionado com a atribuição de papeis a usuários
     public function permissao($id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o papel escolhido
         $papel = Papel::findOrFail($id);
 
@@ -53,6 +66,11 @@ class PapelController extends Controller
     }
 
     public function permissaoStore(Request $request, $id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o papel escolhido
         $papel = Papel::findOrFail($id);
 
@@ -70,6 +88,11 @@ class PapelController extends Controller
     }
 
     public function permissaoDestroy($id, $permissoes_id) {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Primeiramente, vamos recuperar o papel escolhido
         $papel = Papel::findOrFail($id);
 
@@ -84,6 +107,11 @@ class PapelController extends Controller
 
     public function create()
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-create')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Montando os caminhos
         $caminhos = [
             ['url' => '/admin', 'titulo' => 'Admin'],
@@ -102,6 +130,11 @@ class PapelController extends Controller
      */
     public function store(Request $request)
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-create')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Aqui nós verificamos se o usuário preencheu o nome do papel e se esse papel não é um Adm
         if ($request['nome'] && $request['nome'] != 'Admin') {
             Papel::create($request->all());
@@ -130,6 +163,11 @@ class PapelController extends Controller
      */
     public function edit($id)
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-edit')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Verificando se ele não é o papel Adm. Caso seja, nós barramos a operação.
         if (Papel::findOrFail($id)->nome == 'Admin') {
             return redirect()->route('papeis.index');
@@ -157,6 +195,11 @@ class PapelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-update')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Verificando se ele não é o papel Adm. Caso seja, nós barramos a operação.
         if (Papel::findOrFail($id)->nome == 'Admin') {
             return redirect()->route('papeis.index');
@@ -178,6 +221,11 @@ class PapelController extends Controller
      */
     public function destroy($id)
     {
+        // Antes de fazermos qualquer coisa, vamos ver se o usuário logado tem a permissão para o método em questão.
+        if(Gate::denies('papel-delete')) {
+            abort(403, 'Não autorizado');
+        }
+        
         // Verificando se ele não é o papel Adm. Caso seja, nós barramos a operação.
         if (Papel::findOrFail($id)->nome == 'Admin') {
             return redirect()->route('papeis.index');

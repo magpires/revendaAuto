@@ -64,10 +64,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        // Toda vez que um usuário se registra, nós atribuímos a ele o papel de usuário.
+        $user->adicionaPapel('Usuário');
+
+        return $user;
     }
 }
